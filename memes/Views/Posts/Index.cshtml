@@ -6,12 +6,10 @@
 
 @foreach (Post post in Model) {
     <div class="card mt-2">
+        @if (post.ImageName != null) {
+            <img class="card-img-top" src="~/uploads/@Url.Content(post.ImageName)" />
+        }
         <div class="card-body">
-            @if (post.ImageName != null) {
-            <div class="text-center">
-                <img class="rounded" src="~/uploads/@Url.Content(post.ImageName)" />
-            </div>
-            }
             <h5 class="card-title">@post.Title</h5>
             <p class="card-text">@post.Description</p>
         </div>
