@@ -1,16 +1,19 @@
 ﻿@model IEnumerable<Post>
 
 <div>
-    <a asp-action="New">post meme</a>
+    <a asp-action="New" class="btn btn-primary">post meme</a>
 </div>
 
-@foreach (memes.Models.Post post in Model) {
-    <h5>@post.Title</h5>
-    @if (post.ImageName != null) {
-<div class="text-center bg-light">
-    <img src="~/uploads/@Url.Content(post.ImageName)" />
-</div>
-
-    }
-    <p><i>@post.Description</i></p>
+@foreach (Post post in Model) {
+    <div class="card mt-2">
+        <div class="card-body">
+            @if (post.ImageName != null) {
+            <div class="text-center">
+                <img class="rounded" src="~/uploads/@Url.Content(post.ImageName)" />
+            </div>
+            }
+            <h5 class="card-title">@post.Title</h5>
+            <p class="card-text">@post.Description</p>
+        </div>
+    </div>
 }
