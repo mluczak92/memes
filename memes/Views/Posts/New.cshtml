@@ -1,19 +1,37 @@
 ﻿@model memes.Models.Post
 
-<form asp-action="New" method="post" enctype="multipart/form-data">
-    <div class="form-group">
-        <label asp-for="Title">title:</label>
-        <input asp-for="Title" class="form-control" required/>
-    </div>
-    <div class="form-group">
-        <label asp-for="Description">description:</label>
-        <textarea asp-for="Description" rows="3" class="form-control"></textarea>
-    </div>
-    <div class="form-group">
-        <label asp-for="Image">image:</label>
-        <input asp-for="Image" type="file" class="form-control-file" />
-    </div>
-    <div class="form-group">
-        <button class="btn btn-primary" type="submit">post</button>
-    </div>
-</form>
+<div>
+    <form asp-action="New" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label asp-for="Title">title:</label>
+            <div>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <input asp-for="Title" class="form-control" minlength="5" maxlength="50" required />
+        </div>
+        <div class="form-group">
+            <label asp-for="Image">image:</label>
+            <div>
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <input asp-for="Image" type="file" class="form-control-file" accept=".jpg, .jpeg" required />
+        </div>
+        <div class="form-group">
+            <label asp-for="Description">description:</label>
+            <div>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <textarea asp-for="Description" class="form-control" rows="3" maxlength="200"></textarea>
+        </div>
+        <div class="form-group">
+            <label asp-for="TagsString">tags (space separated):</label>
+            <div>
+                <span asp-validation-for="TagsString" class="text-danger"></span>
+            </div>
+            <textarea asp-for="TagsString" class="form-control" rows="1" maxlength="200"></textarea>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary" type="submit">post</button>
+        </div>
+    </form>
+</div>

@@ -1,17 +1,26 @@
 ﻿@model IEnumerable<Post>
 
 <div>
-    <a asp-action="New" class="btn btn-primary">post meme</a>
-</div>
-
-@foreach (Post post in Model) {
-    <div class="card mt-2">
-        @if (post.ImageName != null) {
-            <img class="card-img-top" src="~/uploads/@Url.Content(post.ImageName)" />
-        }
-        <div class="card-body">
-            <h5 class="card-title">@post.Title</h5>
-            <p class="card-text">@post.Description</p>
-        </div>
+    <div>
+        <a asp-action="New" class="btn btn-primary">post meme</a>
     </div>
-}
+
+    @foreach (Post post in Model) {
+        <div class="card mt-2">
+            <div class="post-image-container">
+                <img src="~/uploads/@Url.Content(post.ImageName)" />
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@post.Title</h5>
+                <p class="card-text">@post.Description</p>
+            </div>
+            @if (post.Tags != null) {
+                <div class="card-footer">
+                    @foreach (Tag tag in post.Tags) {
+                        <span class="badge badge-primary">@tag.Value</span>
+                    }
+                </div>
+            }
+        </div>
+    }
+</div>
