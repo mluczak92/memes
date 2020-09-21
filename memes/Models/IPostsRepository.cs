@@ -1,8 +1,9 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 
 namespace memes.Models {
     public interface IPostsRepository {
         IQueryable<Post> Posts { get; }
-        void Add(Post post);
+        Task Add(Post post);
     }
 }
