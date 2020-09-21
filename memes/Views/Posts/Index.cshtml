@@ -1,11 +1,17 @@
-﻿@model IEnumerable<Post>
+﻿@model PostViewModel
 
 <div>
     <div>
-        <a asp-action="New" class="btn btn-primary">post meme</a>
+        <a asp-action="New" class="btn btn-primary">post img</a>
     </div>
 
-    @foreach (Post post in Model) {
+    @if (Model.CurrentTag != null) {
+        <div class="text-center">
+            <h5><span class="badge badge-white">#@Model.CurrentTag</span></h5>
+        </div>
+    }
+
+    @foreach (Post post in Model.Posts) {
         <div class="card mt-2">
             <div class="post-image-container">
                 <img src="~/uploads/@Url.Content(post.ImageName)" />
@@ -14,9 +20,9 @@
                 <h5 class="card-title">@post.Title</h5>
                 <p class="card-text">@post.Description</p>
             </div>
-            @if (post.Tags != null) {
+            @if (post.TagsRealtions != null) {
                 <div class="card-footer">
-                    @foreach (Tag tag in post.Tags) {
+                    @foreach (Tag tag in post.TagsRealtions.Select(x => x.Tag)) {
                         <span class="badge badge-primary">@tag.Value</span>
                     }
                 </div>

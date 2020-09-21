@@ -6,12 +6,20 @@
     overflow: hidden;
 }
 
-.post-image-container > img {
-    width: 100%;
-    height: 100%;
-    transition: transform .25s;
+    .post-image-container > img {
+        width: 100%;
+        height: 100%;
+        transition: transform .25s;
+    }
+
+    .post-image-container:hover > img {
+        transform: scale(1.1);
+    }
+
+.popular-tag:hover {
+    cursor: pointer
 }
 
-.post-image-container:hover > img {
-    transform: scale(1.1);
-}
+    .popular-tag:hover {
+        text-decoration: double
+    }

@@ -2,6 +2,6 @@
 
 namespace memes.Models {
     public interface ITagsSplitter {
-        public IEnumerable<Tag> Split(string tagsString);
+        public ICollection<PostTagRelation> Split(string tagsString);
     }
 }

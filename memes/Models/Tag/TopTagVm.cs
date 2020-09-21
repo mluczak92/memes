@@ -1,6 +1,6 @@
 ﻿namespace memes.Models {
-    public class Tag {
-        public int Id { get; set; }
+    public class TopTagVm {
         public string Value { get; set; }
+        public int Count { get; set; }
     }
 }

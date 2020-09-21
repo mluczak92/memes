@@ -11,6 +11,8 @@ namespace memes {
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder => {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseDefaultServiceProvider(options =>
+                        options.ValidateScopes = false);
                 });
     }
 }

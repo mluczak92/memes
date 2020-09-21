@@ -4,10 +4,14 @@ using System.Linq;
 
 namespace memes.Models {
     public class SimpleTagsSplitter : ITagsSplitter {
-        public IEnumerable<Tag> Split(string tagsString) {
+        public ICollection<PostTagRelation> Split(string tagsString) {
             return tagsString?.Split(' ', StringSplitOptions.RemoveEmptyEntries)
                 .Distinct()
-                .Select(x => new Tag() { Value = x });
+                .Select(x => new PostTagRelation() {
+                    Tag = new Tag() {
+                        Value = x
+                    }
+                }).ToList();
         }
     }
 }
