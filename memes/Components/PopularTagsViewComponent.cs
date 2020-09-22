@@ -13,6 +13,7 @@ namespace memes.Components {
 
         public IViewComponentResult Invoke() {
             ViewBag.CurrentTag = RouteData?.Values["tag"];
+
             return View(repo.Tags
                 .Include(x => x.PostsRelations)
                 .OrderByDescending(x => x.PostsRelations.Count)

@@ -22,20 +22,22 @@ namespace memes.Controllers {
         public async Task<ViewResult> Index(string tag = "", int page = 1) {
             ViewBag.CurrentTag = RouteData?.Values["tag"];
 
-            List<Post> result = await postsRepo.Posts
+            IQueryable<Post> query = postsRepo.Posts
                 .Include(x => x.TagsRealtions)
-                .ThenInclude(x => x.Tag)
-                .Where(x => tag == "" ||
-                    x.TagsRealtions.Any(y => y.Tag.Value == tag))
-                .OrderByDescending(x => x.Id)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
+                    .ThenInclude(x => x.Tag)
+                .Where(x => tag == "" ? true : x.TagsRealtions.Any(y => y.Tag.Value == tag))
+                .OrderByDescending(x => x.Id);
 
             return View(new PostViewModel() {
-                Posts = result,
+                Posts = await query
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync(),
                 CurrentTag = tag,
-                CurrentPage = page
+                CurrentPage = page,
+                PageSize = pageSize,
+                PostsCount = await query
+                    .CountAsync()
             });
         }
 

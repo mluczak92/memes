@@ -9,7 +9,9 @@
     <ul class="list-group">
         @for (int i = 0; i < Model.Count(); i++) {
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a asp-controller="Posts" asp-action="Index" asp-route-tag="@Model[i].Value" asp-route-page="@null"><small class="@(ViewBag.CurrentTag == Model[i].Value ? "font-weight-bold" : "")">@Model[i].Value</small></a>
+                <div class="text-left mr-3" style="word-break: break-all;">
+                    <a asp-controller="Posts" asp-action="Index" asp-route-tag="@Model[i].Value" asp-route-page="@null"><small class="@(ViewBag.CurrentTag == Model[i].Value ? "font-weight-bold" : "")">@Model[i].Value</small></a>
+                </div>
                 <span class="badge @(i <= 2 ? "badge-primary" : i <= 9 ? "badge-info" : "badge-secondary") badge-pill">@Model[i].Count</span>
             </li>
         }
