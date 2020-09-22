@@ -5,11 +5,11 @@
         <a asp-action="New" class="btn btn-primary">post img</a>
     </div>
 
-    @if (Model.CurrentTag != null) {
+    @*@if (Model.CurrentTag != "") {
         <div class="text-center">
-            <h5><span class="badge badge-white">#@Model.CurrentTag</span></h5>
+            <h5><u>@Model.CurrentTag</u></h5>
         </div>
-    }
+    }*@
 
     @foreach (Post post in Model.Posts) {
         <div class="card mt-2">
@@ -23,7 +23,7 @@
             @if (post.TagsRealtions != null) {
                 <div class="card-footer">
                     @foreach (Tag tag in post.TagsRealtions.Select(x => x.Tag)) {
-                        <span class="badge badge-primary">@tag.Value</span>
+                        <a asp-controller="Posts" asp-action="Index" asp-route-tag="@tag.Value" asp-route-page="@null"><small class="@(ViewBag.CurrentTag == tag.Value ? "font-weight-bold" : "")">@tag.Value</small></a>
                     }
                 </div>
             }

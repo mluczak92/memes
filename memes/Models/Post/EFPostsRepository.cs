@@ -9,7 +9,7 @@ namespace memes.Models {
             this.dbContext = dbContext;
         }
 
-        public async Task Add(Post post) {
+        public async Task AddAsync(Post post) {
             await dbContext.Posts.AddAsync(post);
             await dbContext.SaveChangesAsync();
         }

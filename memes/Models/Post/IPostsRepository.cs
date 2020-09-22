@@ -4,6 +4,6 @@ using System.Threading.Tasks;
 namespace memes.Models {
     public interface IPostsRepository {
         IQueryable<Post> Posts { get; }
-        Task Add(Post post);
+        Task AddAsync(Post post);
     }
 }

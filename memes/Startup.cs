@@ -45,12 +45,18 @@ namespace memes {
             app.UseStaticFiles(); // wwwroot/uploads and .css .js
             app.UseRouting(); // lowercaseurls
             app.UseEndpoints(x => {
-                x.MapControllerRoute("specific_tag", "tag/{tag}", new { controller = "Posts", action = "Index" });
+                x.MapControllerRoute("specific_tag_and_page", "tag/{tag}/page/{page}", new { controller = "Posts", action = "Index" });
+                x.MapControllerRoute("specific_page", "page/{page}", new { controller = "Posts", action = "Index"});
+                x.MapControllerRoute("specific_tag", "tag/{tag}", new { controller = "Posts", action = "Index"});
                 x.MapControllerRoute("default", "{controller=Posts}/{action=Index}");
             });
 
             MemesContext dbContext = app.ApplicationServices.GetRequiredService<MemesContext>();
             dbContext.Database.Migrate();
+
+            IPostsRepository postsRepo = app.ApplicationServices.GetRequiredService<IPostsRepository>();
+            ITagsSplitter splitter = app.ApplicationServices.GetRequiredService<ITagsSplitter>();
+            new MemesSeeder(postsRepo, splitter).Seed();
         }
     }
 }

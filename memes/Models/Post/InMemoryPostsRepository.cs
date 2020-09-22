@@ -60,7 +60,7 @@ namespace memes.Models {
 
         public IQueryable<Post> Posts => posts.AsQueryable();
 
-        public async Task Add(Post post) {
+        public async Task AddAsync(Post post) {
             posts.Add(post);
         }
     }
