@@ -32,10 +32,12 @@ namespace memes.Controllers {
             return View(new PostViewModel() {
                 Posts = posts,
                 CurrentTag = tag,
-                CurrentPage = page,
-                PageSize = pageSize,
-                PostsCount = await query.CountAsync()
-        });
+                PageModel = new PageModel() {
+                    CurrentPage = page,
+                    PageSize = pageSize,
+                    Count = await query.CountAsync()
+                }
+            });
         }
 
         public ViewResult New() {
