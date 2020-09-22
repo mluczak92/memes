@@ -1,0 +1,20 @@
+﻿@model Post
+
+<div class="card mt-2">
+    <div class="post-image-container">
+        <a asp-controller="Posts" asp-action="Single" asp-route-id="@Model.Id" asp-route-slug="@Model.SluggedTitle">
+            <img src="~/uploads/@Url.Content(Model.ImageName)" alt="@Model.ImageName" />
+        </a>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">@Model.Title</h5>
+        <p class="card-text">@Model.Description</p>
+    </div>
+    @if (Model.TagsRealtions != null) {
+        <div class="card-footer">
+            @foreach (Tag tag in Model.TagsRealtions.Select(x => x.Tag)) {
+                <a asp-controller="Posts" asp-action="Index" asp-route-tag="@tag.Value" asp-route-page="@null"><small class="@(ViewBag.CurrentTag == tag.Value ? "font-weight-bold" : "")">@tag.Value</small></a>
+            }
+        </div>
+    }
+</div>

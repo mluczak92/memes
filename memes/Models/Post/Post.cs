@@ -12,6 +12,8 @@ namespace memes.Models {
         [MaxLength(50, ErrorMessage = "title has to be at most 50 characters")]
         public string Title { get; set; }
 
+        public string SluggedTitle { get; set; }
+
         [NotMapped]
         [Required]
         [MaxFileSize(1 * 1024 * 1024, ErrorMessage = "maximum allowed file size is 1mb")]

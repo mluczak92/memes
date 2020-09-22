@@ -34,6 +34,7 @@ namespace memes {
             services.AddTransient<ITagsRepository, EFTagsRepository>();
             services.AddTransient<IImageUploader, SimpleImageUploader>();
             services.AddTransient<ITagsSplitter, EFUniqueTagsSplitter>();
+            services.AddTransient<ISluggingService, SluggifySlugger>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
@@ -45,8 +46,9 @@ namespace memes {
             app.UseStaticFiles(); // wwwroot/uploads and .css .js
             app.UseRouting(); // lowercaseurls
             app.UseEndpoints(x => {
-                x.MapControllerRoute("specific tag_and page", "tag/{tag}/page/{page}", new { controller = "Posts", action = "Index" });
-                x.MapControllerRoute("specific page", "page/{page}", new { controller = "Posts", action = "Index"});
+                x.MapControllerRoute("specific post page", "posts/{id:int:min(1)}/{slug}", new { controller = "Posts", action = "Single" });
+                x.MapControllerRoute("specific tag and page", "tag/{tag}/page/{page:int:min(1)}", new { controller = "Posts", action = "Index" });
+                x.MapControllerRoute("specific page", "page/{page:int:min(1)}", new { controller = "Posts", action = "Index"});
                 x.MapControllerRoute("specific tag", "tag/{tag}", new { controller = "Posts", action = "Index"});
                 x.MapControllerRoute("default", "{controller=Posts}/{action=Index}");
             });
@@ -55,8 +57,7 @@ namespace memes {
             dbContext.Database.Migrate();
 
             IPostsRepository postsRepo = app.ApplicationServices.GetRequiredService<IPostsRepository>();
-            ITagsSplitter splitter = app.ApplicationServices.GetRequiredService<ITagsSplitter>();
-            new MemesSeeder(postsRepo, splitter).Seed();
+            new MemesSeeder(postsRepo).Seed();
         }
     }
 }

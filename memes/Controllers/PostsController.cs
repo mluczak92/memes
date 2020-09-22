@@ -1,7 +1,6 @@
 ﻿using memes.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,18 +8,13 @@ using System.Threading.Tasks;
 namespace memes.Controllers {
     public class PostsController : Controller {
         IPostsRepository postsRepo;
-        IImageUploader imageUploader;
-        ITagsSplitter tagsSplitter;
         int pageSize = 10;
 
-        public PostsController(IPostsRepository postsRepo, IImageUploader imageUploader,
-            ITagsSplitter tagsSplitter) {
+        public PostsController(IPostsRepository postsRepo) {
             this.postsRepo = postsRepo;
-            this.imageUploader = imageUploader;
-            this.tagsSplitter = tagsSplitter;
         }
 
-        public async Task<ViewResult> Index(string tag = "", int page = 1) {
+        public async Task<IActionResult> Index(string tag = "", int page = 1) {
             ViewBag.CurrentTag = RouteData?.Values["tag"];
 
             IQueryable<Post> query = postsRepo.Posts
@@ -29,17 +23,19 @@ namespace memes.Controllers {
                 .Where(x => tag == "" ? true : x.TagsRealtions.Any(y => y.Tag.Value == tag))
                 .OrderByDescending(x => x.Id);
 
-            return View(new PostViewModel() {
-                Posts = await query
-                    .Skip(Math.Max(page - 1, 0) * pageSize)
+
+            IEnumerable<Post> posts = await query
+                    .Skip((page - 1) * pageSize)
                     .Take(pageSize)
-                    .ToListAsync(),
+                    .ToListAsync();
+
+            return View(new PostViewModel() {
+                Posts = posts,
                 CurrentTag = tag,
                 CurrentPage = page,
                 PageSize = pageSize,
-                PostsCount = await query
-                    .CountAsync()
-            });
+                PostsCount = await query.CountAsync()
+        });
         }
 
         public ViewResult New() {
@@ -49,13 +45,23 @@ namespace memes.Controllers {
         [HttpPost]
         public async Task<IActionResult> New(Post post) {
             if (ModelState.IsValid) {
-                post.ImageName = await imageUploader.UploadAndGetName(post.Image);
-                post.TagsRealtions = tagsSplitter.Split(post.TagsString);
                 await postsRepo.AddAsync(post);
                 return RedirectToAction("Index");
             } else {
                 return View();
             }
+        }
+
+        public async Task<IActionResult> Single(int id, string slug) {
+            Post post = await postsRepo.Posts
+                .Include(x => x.TagsRealtions)
+                    .ThenInclude(x => x.Tag)
+                .SingleOrDefaultAsync(x => x.Id == id && x.SluggedTitle == slug);
+
+            if (post == null)
+                return NotFound();
+
+            return View(post);
         }
     }
 }
