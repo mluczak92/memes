@@ -24,6 +24,7 @@ namespace memes.Models {
         public string Description { get; set; }
 
         [NotMapped]
+        [RegularExpression("^[a-zA-Z0-9 ]*$", ErrorMessage = "only letters, digits and spaces are allowed")]
         [MaxLength(200, ErrorMessage = "tags has to be at most 200 characters")]
         public string TagsString { get; set; }
 

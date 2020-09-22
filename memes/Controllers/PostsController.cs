@@ -1,6 +1,7 @@
 ﻿using memes.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,7 +31,7 @@ namespace memes.Controllers {
 
             return View(new PostViewModel() {
                 Posts = await query
-                    .Skip((page - 1) * pageSize)
+                    .Skip(Math.Max(page - 1, 0) * pageSize)
                     .Take(pageSize)
                     .ToListAsync(),
                 CurrentTag = tag,

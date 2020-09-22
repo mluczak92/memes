@@ -14,7 +14,7 @@
     @foreach (Post post in Model.Posts) {
         <div class="card mt-2">
             <div class="post-image-container">
-                <img src="~/uploads/@Url.Content(post.ImageName)" />
+                <img src="~/uploads/@Url.Content(post.ImageName)" alt="@post.ImageName" />
             </div>
             <div class="card-body">
                 <h5 class="card-title">@post.Title</h5>

@@ -15,11 +15,3 @@
     .post-image-container:hover > img {
         transform: scale(1.1);
     }
-
-.popular-tag:hover {
-    cursor: pointer
-}
-
-    .popular-tag:hover {
-        text-decoration: double
-    }
