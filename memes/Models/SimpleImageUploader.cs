@@ -20,7 +20,9 @@ namespace memes.Models {
                 Directory.CreateDirectory(uploadsPath);
             }
 
-            string newFileName = $"{Path.GetRandomFileName()}{Path.GetExtension(file.FileName)}";
+            string newFileName = Path.GetRandomFileName();
+            newFileName = Path.ChangeExtension(newFileName, Path.GetExtension(file.FileName));
+
             string filePath = Path.Combine(uploadsPath, newFileName);
             using (FileStream fileStream = new FileStream(filePath, FileMode.Create)) {
                 await file.CopyToAsync(fileStream);
