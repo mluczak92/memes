@@ -45,10 +45,10 @@ namespace memes.Models {
             int next = PageModel.CurrentPage + 1;
             int last = PageModel.PagesCount;
 
-            AddButton("first", null, "1 ««", curr > 1);
-            AddButton("previous", prev < 2 ? null : (int?)prev, $"{Math.Max(prev, 1)} «", curr > 1);
-            AddButton("next", Math.Min(next, last), $"» {Math.Min(next, last)}", curr < last);
-            AddButton("last", PageModel.PagesCount, $"»» {last}", curr < last);
+            AddButton("first", null, "first", curr > 1);
+            AddButton("previous", prev < 2 ? null : (int?)prev, "previous", curr > 1);
+            AddButton("next", Math.Min(next, last), "next", curr < last);
+            AddButton("last", PageModel.PagesCount, "last", curr < last);
 
             //for (int i = 1; i <= PageModel.PagesCount; i++) {
             //    TagBuilder liTag = new TagBuilder("li");
