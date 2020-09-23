@@ -26,8 +26,6 @@ namespace memes.Models {
         [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
         public Dictionary<string, object> PageUrlValues { get; set; } = new Dictionary<string, object>();
         public string UlClass { get; set; }
-        public string PageClassNormal { get; set; }
-        public string PageClassSelected { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output) {
             urlHelper = urlHelperFactory.GetUrlHelper(ViewContext);
@@ -49,22 +47,6 @@ namespace memes.Models {
             AddButton("previous", prev < 2 ? null : (int?)prev, "previous", curr > 1);
             AddButton("next", Math.Min(next, last), "next", curr < last);
             AddButton("last", PageModel.PagesCount, "last", curr < last);
-
-            //for (int i = 1; i <= PageModel.PagesCount; i++) {
-            //    TagBuilder liTag = new TagBuilder("li");
-            //    TagBuilder aTag = new TagBuilder("a");
-
-            //    PageUrlValues["page"] = i == 1 ? null : (object)i;
-            //    aTag.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
-
-            //    //aTag.AddCssClass(i == PageModel.CurrentPage ? PageClassSelected : PageClassNormal);
-            //    //aTag.AddCssClass(PageClass);
-
-            //    aTag.InnerHtml.Append(i.ToString());
-
-            //    liTag.InnerHtml.AppendHtml(aTag);
-            //    ulTag.InnerHtml.AppendHtml(liTag);
-            //}
 
             output.Content.AppendHtml(navTag.InnerHtml);
         }

@@ -23,14 +23,11 @@ namespace memes.Controllers {
                 .Where(x => tag == "" ? true : x.TagsRealtions.Any(y => y.Tag.Value == tag))
                 .OrderByDescending(x => x.Id);
 
-
-            IEnumerable<Post> posts = await query
+            return View(new PostViewModel() {
+                Posts = await query
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)
-                    .ToListAsync();
-
-            return View(new PostViewModel() {
-                Posts = posts,
+                    .ToListAsync(),
                 CurrentTag = tag,
                 PageModel = new PageModel() {
                     CurrentPage = page,
