@@ -5,26 +5,21 @@
         <a asp-action="New" class="btn btn-primary">post img</a>
     </div>
 
-    <div page-model="@Model.PageModel" page-url-tag="@Model.CurrentTag" page-action="Index"
-         page-class="btn btn-group ml-1" page-class-normal="btn-light" page-class-selected="btn-primary"
-         class="mt-2">
-    </div>
+    <nav page-model="@Model.PageModel" page-url-tag="@Model.CurrentTag" page-action="Index" ul-class="justify-content-center" class="mt-2"></nav>
 
-    <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-end">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
+    @*<li class="page-item">
+            <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">3</a>
+        </li>*@
 
     @foreach (Post post in Model.Posts) {
         @await Html.PartialAsync("PostCard", post)
     }
+
+    <nav page-model="@Model.PageModel" page-url-tag="@Model.CurrentTag" page-action="Index" ul-class="justify-content-center" class="mt-2"></nav>
 </div>
