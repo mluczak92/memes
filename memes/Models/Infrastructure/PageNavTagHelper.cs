@@ -45,34 +45,37 @@ namespace memes.Models {
 
             AddButton("first", null, "first", curr > 1);
             AddButton("previous", prev < 2 ? null : (int?)prev, "previous", curr > 1);
+            AddButton("current", curr < 2 ? null : (int?)curr, "current", true);
             AddButton("next", Math.Min(next, last), "next", curr < last);
             AddButton("last", PageModel.PagesCount, "last", curr < last);
 
             output.Content.AppendHtml(navTag.InnerHtml);
         }
 
-        void AddButton(string label, int? page, string innerHtml, bool enabled) {
+        void AddButton(string ariaLabel, int? page, string innerHtml, bool enabled, string liClasses = "") {
             TagBuilder liTag = new TagBuilder("li");
+            liTag.AddCssClass("page-item");
+            liTag.AddCssClass(liClasses);
 
-            TagBuilder aTag = new TagBuilder("a");
             if (!enabled) {
-                aTag.AddCssClass("disabled-events bg-light");
+                liTag.AddCssClass("disabled");
             }
 
+            TagBuilder aTag = new TagBuilder("a");
             TagBuilder span1Tag = new TagBuilder("span");
             TagBuilder span2Tag = new TagBuilder("span");
 
             PageUrlValues["page"] = page;
             aTag.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
 
-            aTag.Attributes["aria-label"] = label;
+            aTag.Attributes["aria-label"] = ariaLabel;
             aTag.AddCssClass("page-link");
 
             span1Tag.Attributes["aria-hidden"] = "true";
             span1Tag.InnerHtml.Append(innerHtml);
 
             span2Tag.AddCssClass("sr-only");
-            span2Tag.InnerHtml.Append(label);
+            span2Tag.InnerHtml.Append(ariaLabel);
 
             aTag.InnerHtml.AppendHtml(span1Tag);
             aTag.InnerHtml.AppendHtml(span2Tag);

@@ -1,7 +1,6 @@
 ﻿using memes.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,7 +13,7 @@ namespace memes.Controllers {
             this.postsRepo = postsRepo;
         }
 
-        public async Task<IActionResult> Index(string tag = "", int page = 1) {
+        public async Task<ViewResult> Index(string tag = "", int page = 1) {
             ViewBag.CurrentTag = RouteData?.Values["tag"];
 
             IQueryable<Post> query = postsRepo.Posts

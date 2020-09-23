@@ -8,27 +8,17 @@
     <title>asdf-memes</title>
 </head>
 <body class="bg-light">
-    <div class="container" style="max-width: 1024px">
-        <div class="row justify-content-center">
-            <div class="text-center">
-                <h2><a asp-controller="Posts" asp-action="Index" asp-route-tag="@null" asp-route-page="@null">asdf-memes</a></h2>
-                <h5><i>site with <del>cats</del> images</i></h5>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-3 col-sm-12">
-                <div class="text-center b-1">
-                    <h5><i>do things</i></h5>
-                    <a asp-action="New" class="btn btn-primary">post img</a>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-12">
+    <div class="container">
+        @await Html.PartialAsync("TopNavbar")
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-8 col-sm-12">
                 @RenderBody()
             </div>
-            <div class="col-md-3 col-sm-12">
+            <div class="col-md-4 col-sm-12">
                 @await Component.InvokeAsync("PopularTags")
             </div>
         </div>
     </div>
+    @await Html.PartialAsync("Footer")
 </body>
 </html>

@@ -1,9 +1,9 @@
 ﻿@model PostViewModel
 
-<nav page-model="@Model.PageModel" page-url-tag="@Model.CurrentTag" page-action="Index" ul-class="justify-content-center" class="mt-2"></nav>
+<nav page-model="@Model.PageModel" page-url-tag="@Model.CurrentTag" page-action="Index" ul-class="justify-content-center"></nav>
 
 @foreach (Post post in Model.Posts) {
     @await Html.PartialAsync("PostCard", post)
 }
 
-<nav page-model="@Model.PageModel" page-url-tag="@Model.CurrentTag" page-action="Index" ul-class="justify-content-center" class="mt-2"></nav>
+<nav page-model="@Model.PageModel" page-url-tag="@Model.CurrentTag" page-action="Index" ul-class="justify-content-center" class="mt-3"></nav>

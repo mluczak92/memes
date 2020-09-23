@@ -16,6 +16,8 @@ namespace memes.Models {
             this.slugger = slugger;
         }
 
+        public IQueryable<Post> Posts => dbContext.Posts;
+
         public async Task AddAsync(Post post) {
             post.ImageName = await imageUploader.UploadAndGetName(post.Image);
             post.TagsRealtions = tagsSplitter.Split(post.TagsString);
@@ -23,7 +25,5 @@ namespace memes.Models {
             await dbContext.Posts.AddAsync(post);
             await dbContext.SaveChangesAsync();
         }
-
-        public IQueryable<Post> Posts => dbContext.Posts;
     }
 }
